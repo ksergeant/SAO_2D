@@ -1,8 +1,6 @@
 -- Cette ligne permet d'afficher des traces dans la console pendant l'éxécution
 io.stdout:setvbuf('no')
 
--- Empèche Love de filtrer les contours des images quand elles sont redimentionnées
-
 -- Indispensable pour du pixel art
 love.graphics.setDefaultFilter("nearest")
 
@@ -18,22 +16,10 @@ local command = "nul"
 --local Background = {}
 
 
-local Player = {}
-Player.x = 0
-Player.y = 0
-Player.angle = 90
-Player.speed = 300
-Player.vx = 0
-Player.vy = 0
-Player.uniteC = 6
-Player.uniteVol = 3
-Player.energie = 100
-Player.bouclier = 50
-Player.engineOn = false
-Player.img = love.graphics.newImage("images/Ship1_blue.png")
+local myPlayer = require("Player")
+local myBot = require("bot")
 
-
-bgm = love.audio.newSource("/sons/mainTrack.ogg", "stream")
+bgm = love.audio.newSource("/sons/Fight1.ogg", "stream")
 love.audio.play(bgm)
 
 local listeCommand = {}
@@ -61,7 +47,8 @@ function love.load()
 
   largeur = love.graphics.getWidth()
   hauteur = love.graphics.getHeight()
-  myTileSheet.Load()
+  myPlayer.Load()
+  myBot.Load()
   love.audio.play(bgm)
   
 end
@@ -93,20 +80,23 @@ function love.draw()
    love.graphics.draw(myGame.Background.img,0,0)
    
   
-   love.graphics.draw(Player.img, Player.x, Player.y, 
-      math.rad(Player.angle), 1, 1, Player.img:getWidth()/2, Player.img:getHeight()/2)
+   love.graphics.draw(myTileSheet.TileSheet,myPlayer.images[9], myPlayer.x, myPlayer.y, 
+      math.rad(myPlayer.angle), 1.3, 1.3)
+    
+    love.graphics.draw(myTileSheet.TileSheet,myBot.images[4], myBot.x, myBot.y, 
+      math.rad(myBot.angle), 1.3, 1.3)
     
     local sDebug = " Debug:"
-    sDebug = sDebug.. " x="..tostring(Player.x)
-    sDebug = sDebug.. " y="..tostring(Player.y)
+    sDebug = sDebug.. " x="..tostring(myPlayer.x)
+    sDebug = sDebug.. " y="..tostring(myPlayer.y)
     local Tab = "Tab"
     Tab = Tab.. "command="..tostring(command)
     
-    local InfoPlayer = "Player1:"
-    InfoPlayer = InfoPlayer.. "Energie="..tostring(Player.energie)
-    InfoPlayer = InfoPlayer.. " Bouclier=" ..tostring(Player.bouclier)
-    InfoPlayer = InfoPlayer.. " UC="..tostring(Player.uniteC)
-    InfoPlayer = InfoPlayer.. " UV="..tostring(Player.uniteVol)
+    --local InfoPlayer = "Player1:"
+    --InfoPlayer = InfoPlayer.. "Energie="..tostring(myPlayer.energie)
+    --InfoPlayer = InfoPlayer.. " Bouclier=" ..tostring(myPlayer.bouclier)
+    --InfoPlayer = InfoPlayer.. " UC="..tostring(myPlayer.uniteC)
+    --InfoPlayer = InfoPlayer.. " UV="..tostring(myPlayer.uniteVol)
 
    love.graphics.setColor(1,0,0,100)
    love.graphics.print("Combat Scene",(largeur/2)-40, 10)
@@ -114,11 +104,11 @@ function love.draw()
 
     
 
-    love.graphics.print(sDebug,0,0)
-    love.graphics.print(InfoPlayer, 200, 10)
-    love.graphics.print(Tab,815, 30)
+    --love.graphics.print(sDebug,0,0)
+    --love.graphics.print(InfoPlayer, 200, 10)
+    --love.graphics.print(Tab,815, 30)
     
-    myTileSheet.Draw()
+    
     
    -- love.graphics.rectangle("fill", 752, 450, 250,50)
    -- love.graphics.setColor(1,0,0,100)
@@ -128,8 +118,8 @@ end
 
 function love.mousepressed(x, y, button, istouch)
    if button == 1 then 
-      Player.x = x
-      Player.y = y
+      myPlayer.x = x
+      myPlayer.y = y
    end
 end
 
@@ -138,48 +128,48 @@ end
 function love.keypressed(key)
   
   if key == "up" then
-    Player.y =  Player.y - 50
+    myPlayer.y =  myPlayer.y - 50
     
-      if Player.y < 50 then
-         Player.y = 75
+      if myPlayer.y < 50 then
+         myPlayer.y = 75
       end
     
-    Player.angle = 360
+    myPlayer.angle = 360
     command = "up"
     print(key)
   end
 
   if key == "down" then
-    Player.y =  Player.y + 50
-    if Player.y > 450 then
-       Player.y = 475
+    myPlayer.y =  Player.y + 50
+    if myPlayer.y > 450 then
+       myPlayer.y = 475
     end
     
-    Player.angle = 180
+    myPlayer.angle = 180
     
     command = "down"
     print(key)
   end
 
   if key == "left" then
-    Player.x =  Player.x - 50
-    if Player.x < 50 then
-       Player.x = 75
+    myPlayer.x =  Player.x - 50
+    if myPlayer.x < 50 then
+       myPlayer.x = 75
     end
     
-    Player.angle = 270
+    myPlayer.angle = 270
 
     command = "left"
     print(key)
   end
 
   if key == "right" then
-    Player.x =  Player.x + 50
-    if Player.x > 700 then
-       Player.x = 725
+    myPlayer.x =  myPlayer.x + 50
+    if myPlayer.x > 700 then
+       myPlayer.x = 725
     end
     
-    Player.angle = 90
+    myPlayer.angle = 90
     
     command = "right"
     print(key)

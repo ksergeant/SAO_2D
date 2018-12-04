@@ -2,7 +2,7 @@ local game = {}
 
 game.Background = {}
 
-game.Background.img = love.graphics.newImage("Background/7-bell.png")
+game.Background.img = love.graphics.newImage("rpg-battle-system-1/backgrounds/1.png")
 
 local arene = require("Arene")
 local player = require("Player")
