@@ -9,6 +9,7 @@ if arg[#arg] == "-debug" then require("mobdebug").start() end
 
 local myGame = require("Game")
 local myTileSheet = require("Tilesheet")
+local myTileSheetFace = require("TileSheetFace")
 
 local tableauCommand = "TabCommand :"
 local command = "nul"
@@ -16,10 +17,10 @@ local command = "nul"
 --local Background = {}
 
 
-local myPlayer = require("Player")
-local myBot = require("bot")
+local kirito = require("Kirito")
+local asuna = require("Asuna")
 
-bgm = love.audio.newSource("/sons/Fight1.ogg", "stream")
+bgm = love.audio.newSource("/sons/maintrack.ogg", "stream")
 love.audio.play(bgm)
 
 local listeCommand = {}
@@ -47,8 +48,8 @@ function love.load()
 
   largeur = love.graphics.getWidth()
   hauteur = love.graphics.getHeight()
-  myPlayer.Load()
-  myBot.Load()
+  kirito.Load()
+  asuna.Load()
   love.audio.play(bgm)
   
 end
@@ -80,15 +81,21 @@ function love.draw()
    love.graphics.draw(myGame.Background.img,0,0)
    
   
-   love.graphics.draw(myTileSheet.TileSheet,myPlayer.images[9], myPlayer.x, myPlayer.y, 
-      math.rad(myPlayer.angle), 1.3, 1.3)
+   love.graphics.draw(myTileSheet.TileSheet,kirito.images[7], kirito.x, kirito.y, 
+      math.rad(kirito.angle), 1.3, 1.3)
     
-    love.graphics.draw(myTileSheet.TileSheet,myBot.images[4], myBot.x, myBot.y, 
-      math.rad(myBot.angle), 1.3, 1.3)
+    love.graphics.draw(myTileSheet.TileSheet,asuna.images[7], asuna.x, asuna.y, 
+      math.rad(asuna.angle), 1.3, 1.3)
+    
+    love.graphics.draw(myTileSheetFace.TileSheet,kirito.imageFace[1], -35, 470, 
+      math.rad(kirito.angle), 0.9, 0.9)
+    
+    love.graphics.draw(myTileSheetFace.TileSheet,asuna.imageFace[1], 460, 470, 
+      math.rad(asuna.angle), 0.9, 0.9)
     
     local sDebug = " Debug:"
-    sDebug = sDebug.. " x="..tostring(myPlayer.x)
-    sDebug = sDebug.. " y="..tostring(myPlayer.y)
+    sDebug = sDebug.. " x="..tostring(kirito.x)
+    sDebug = sDebug.. " y="..tostring(kirito.y)
     local Tab = "Tab"
     Tab = Tab.. "command="..tostring(command)
     
@@ -100,7 +107,7 @@ function love.draw()
 
    love.graphics.setColor(1,0,0,100)
    love.graphics.print("Combat Scene",(largeur/2)-40, 10)
-  love.graphics.setColor(255,255,255,100)
+   love.graphics.setColor(255,255,255,100)
 
     
 
@@ -118,66 +125,7 @@ end
 
 function love.mousepressed(x, y, button, istouch)
    if button == 1 then 
-      myPlayer.x = x
-      myPlayer.y = y
+      
    end
 end
-
-
-
-function love.keypressed(key)
-  
-  if key == "up" then
-    myPlayer.y =  myPlayer.y - 50
-    
-      if myPlayer.y < 50 then
-         myPlayer.y = 75
-      end
-    
-    myPlayer.angle = 360
-    command = "up"
-    print(key)
-  end
-
-  if key == "down" then
-    myPlayer.y =  Player.y + 50
-    if myPlayer.y > 450 then
-       myPlayer.y = 475
-    end
-    
-    myPlayer.angle = 180
-    
-    command = "down"
-    print(key)
-  end
-
-  if key == "left" then
-    myPlayer.x =  Player.x - 50
-    if myPlayer.x < 50 then
-       myPlayer.x = 75
-    end
-    
-    myPlayer.angle = 270
-
-    command = "left"
-    print(key)
-  end
-
-  if key == "right" then
-    myPlayer.x =  myPlayer.x + 50
-    if myPlayer.x > 700 then
-       myPlayer.x = 725
-    end
-    
-    myPlayer.angle = 90
-    
-    command = "right"
-    print(key)
-  end
-
-  if key == "space" then
-    
-    
-  end
-
-end  
+ 
