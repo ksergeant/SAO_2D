@@ -19,6 +19,7 @@ local command = "nul"
 
 local kirito = require("Kirito")
 local asuna = require("Asuna")
+local sanglier = require("Sanglier")
 
 bgm = love.audio.newSource("/sons/maintrack.ogg", "stream")
 love.audio.play(bgm)
@@ -81,17 +82,23 @@ function love.draw()
    love.graphics.draw(myGame.Background.img,0,0)
    
   
-   love.graphics.draw(myTileSheet.TileSheet,kirito.images[7], kirito.x, kirito.y, 
-      math.rad(kirito.angle), 1.3, 1.3)
+   love.graphics.draw(myTileSheet.TileSheet,kirito.images[6], kirito.x, kirito.y, 
+      math.rad(kirito.angle), 1.5, 1.5)
     
-    love.graphics.draw(myTileSheet.TileSheet,asuna.images[7], asuna.x, asuna.y, 
-      math.rad(asuna.angle), 1.3, 1.3)
+    love.graphics.draw(myTileSheet.TileSheet,asuna.images[6], asuna.x, asuna.y, 
+      math.rad(asuna.angle), 1.5, 1.5)
     
     love.graphics.draw(myTileSheetFace.TileSheet,kirito.imageFace[1], -35, 470, 
       math.rad(kirito.angle), 0.9, 0.9)
     
     love.graphics.draw(myTileSheetFace.TileSheet,asuna.imageFace[1], 460, 470, 
       math.rad(asuna.angle), 0.9, 0.9)
+    
+    love.graphics.draw(sanglier.image, sanglier.x, sanglier.y, 
+      math.rad(sanglier.angle), 0.7, 0.7)
+    
+    love.graphics.draw(kirito.gui, 130, 500,
+      math.rad(kirito.angle), 0.25, 0.25)
     
     local sDebug = " Debug:"
     sDebug = sDebug.. " x="..tostring(kirito.x)

@@ -7,7 +7,8 @@ asuna.imgCurrent = 1
 asuna.line = 1
 asuna.column = 1
 
-asuna.x = 120
+asuna.nom = "Asuna"
+asuna.x = 450
 asuna.y = 280
 asuna.angle = 0
 asuna.speed = 300

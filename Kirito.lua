@@ -7,7 +7,9 @@ kirito.imgCurrent = 1
 kirito.line = 1
 kirito.column = 1
 
-kirito.x = 150
+kirito.gui = love.graphics.newImage("GUI/StatusBar.png")
+kirito.nom ="Kirito"
+kirito.x = 500
 kirito.y = 230
 kirito.angle = 0
 kirito.speed = 300
