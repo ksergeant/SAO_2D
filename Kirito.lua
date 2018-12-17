@@ -11,6 +11,8 @@ kirito.gui = love.graphics.newImage("GUI/StatusBarVideFinal.png")
 kirito.gui2 = love.graphics.newImage("GUI/StatusBarVert.png")
 kirito.iconeEtat = love.graphics.newImage("GUI/IconEtat.png")
 kirito.boite = love.graphics.newImage("GUI/BoiteDeDialogue.png")
+kirito.barreXp = love.graphics.newImage("rpg-battle-system/HUD/bar/background.png")
+kirito.barreXpPleine = love.graphics.newImage("rpg-battle-system/HUD/bar/purple.png")
 
 kirito.nom ="Kirito"
 kirito.x = 500
@@ -18,6 +20,11 @@ kirito.y = 230
 kirito.vieActuelle = 200
 kirito.vieMax = 250
 kirito.niveau = 1
+kirito.force = 10
+kirito.vitesse = 5
+kirito.attaque = 25
+kirito.defense = 10
+
 kirito.angle = 0
 kirito.speed = 300
 kirito.vx = 0
