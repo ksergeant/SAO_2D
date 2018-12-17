@@ -46,7 +46,7 @@ function CreeSprite(pNomImage, pX, pY)
 end
 
 function love.load()
-
+love.graphics.setNewFont("GUI/Maximilien_Regular.ttf", 15)
   largeur = love.graphics.getWidth()
   hauteur = love.graphics.getHeight()
   kirito.Load()
@@ -67,6 +67,8 @@ function love.update(dt)
 end
   
 
+
+
 function love.draw()
   
   
@@ -75,31 +77,46 @@ function love.draw()
     
     
     local s = sprites[n]
-    love.graphics.draw(s.image, s.x, s.y, 0, 2, 2, s.l/2, s.h/2)
+   -- love.graphics.draw(s.image, s.x, s.y, 0, 2, 2, s.l/2, s.h/2)
   end
   
    
-   love.graphics.draw(myGame.Background.img,0,0)
+   love.graphics.draw(myGame.Background.img,0,0,0,1,1)
+   
+   love.graphics.draw(kirito.boite, 0, 470,
+      math.rad(kirito.angle), 1, 1)
    
   
    love.graphics.draw(myTileSheet.TileSheet,kirito.images[6], kirito.x, kirito.y, 
       math.rad(kirito.angle), 1.5, 1.5)
-    
-    love.graphics.draw(myTileSheet.TileSheet,asuna.images[6], asuna.x, asuna.y, 
+  
+   love.graphics.draw(myTileSheet.TileSheet,asuna.images[6], asuna.x, asuna.y, 
       math.rad(asuna.angle), 1.5, 1.5)
     
-    love.graphics.draw(myTileSheetFace.TileSheet,kirito.imageFace[1], -35, 470, 
+   love.graphics.draw(myTileSheetFace.TileSheet,kirito.imageFace[1], -35, 470, 
       math.rad(kirito.angle), 0.9, 0.9)
     
-    love.graphics.draw(myTileSheetFace.TileSheet,asuna.imageFace[1], 460, 470, 
-      math.rad(asuna.angle), 0.9, 0.9)
+    --love.graphics.draw(myTileSheetFace.TileSheet,asuna.imageFace[1], 460, 470, 
+     -- math.rad(asuna.angle), 0.9, 0.9)
     
     love.graphics.draw(sanglier.image, sanglier.x, sanglier.y, 
       math.rad(sanglier.angle), 0.7, 0.7)
     
-    love.graphics.draw(kirito.gui, 130, 500,
-      math.rad(kirito.angle), 0.25, 0.25)
+    love.graphics.draw(kirito.gui, 135, 490,
+      math.rad(kirito.angle), 0.30, 0.30)
     
+    love.graphics.draw(kirito.gui2, 237, 507,
+    math.rad(kirito.angle), 0.348, 0.348)
+  
+    love.graphics.draw(kirito.iconeEtat, 122, 504.5,
+    math.rad(kirito.angle), 0.35, 0.35)
+  
+    
+    love.graphics.print(kirito.niveau,578,544)
+    love.graphics.print(kirito.nom,179,513)
+    love.graphics.print(kirito.vieActuelle,443,544)
+    love.graphics.print(kirito.vieMax,503,544)
+
     local sDebug = " Debug:"
     sDebug = sDebug.. " x="..tostring(kirito.x)
     sDebug = sDebug.. " y="..tostring(kirito.y)

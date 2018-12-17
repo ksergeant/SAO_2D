@@ -7,10 +7,17 @@ kirito.imgCurrent = 1
 kirito.line = 1
 kirito.column = 1
 
-kirito.gui = love.graphics.newImage("GUI/StatusBar.png")
+kirito.gui = love.graphics.newImage("GUI/StatusBarVideFinal.png")
+kirito.gui2 = love.graphics.newImage("GUI/StatusBarVert.png")
+kirito.iconeEtat = love.graphics.newImage("GUI/IconEtat.png")
+kirito.boite = love.graphics.newImage("GUI/BoiteDeDialogue.png")
+
 kirito.nom ="Kirito"
 kirito.x = 500
 kirito.y = 230
+kirito.vieActuelle = 200
+kirito.vieMax = 250
+kirito.niveau = 1
 kirito.angle = 0
 kirito.speed = 300
 kirito.vx = 0
