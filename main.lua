@@ -10,6 +10,7 @@ if arg[#arg] == "-debug" then require("mobdebug").start() end
 local myGame = require("Game")
 local myTileSheet = require("Tilesheet")
 local myTileSheetFace = require("TileSheetFace")
+local myTileSheetCurseur = require("TileSheetCurseur")
 
 local tableauCommand = "TabCommand :"
 local command = "nul"
@@ -123,11 +124,20 @@ function love.draw()
   love.graphics.draw(kirito.barreXpPleine, 30, 569,
     math.rad(kirito.angle), 1, 1)
   
-    -- infos Kirito
+  -- infos Kirito
     love.graphics.print(kirito.niveau,578,464)
     love.graphics.print(kirito.nom,179,433)
     love.graphics.print(kirito.vieActuelle,443,464)
     love.graphics.print(kirito.vieMax,503,464)
+
+-- Curseur
+love.graphics.draw(myTileSheetCurseur.TileSheet, kirito.imageCurseur[1], 165, 505,
+    math.rad(kirito.angle), 0.25,0.25)
+
+love.graphics.print("ATTAQUE", 220,522)
+love.graphics.print("INVENTAIRE", 220,580)
+love.graphics.print("SWITCH", 490,522)
+love.graphics.print("COURRIR", 490,580)
 
 love.graphics.setNewFont("GUI/Maximilien_Regular.ttf", 12)
 love.graphics.print("XP",1,567)
