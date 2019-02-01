@@ -2,24 +2,28 @@ local kirito = {}
 local kiritoTileSheet = require("Tilesheet")
 local kiritoTileSheetFace = require("TileSheetFace")
 local kiritoTileSheetCurseur = require("TileSheetCurseur")
+
 kirito.images = {}
 kirito.imgCurrent = 1
 kirito.line = 1
 kirito.column = 1
 
-kirito.gui = love.graphics.newImage("GUI/StatusBarVideFinal.png")
-kirito.gui2 = love.graphics.newImage("GUI/StatusBarVert.png")
+kirito.barreDeVieVide = love.graphics.newImage("GUI/StatusBarVideFinal.png")
+kirito.barreDeVieVerte = love.graphics.newImage("GUI/StatusBarVert.png")
+kirito.barreDeVieJaune = love.graphics.newImage("GUI/StatusBarJaune.png")
+kirito.barreDeVieRouge = love.graphics.newImage("GUI/StatusBarRouge.png")
+
 kirito.iconeEtat = love.graphics.newImage("GUI/IconEtat.png")
 kirito.boite = love.graphics.newImage("GUI/BoiteDeDialogueFinal2.png")
 kirito.barreXp = love.graphics.newImage("rpg-battle-system/HUD/bar/background.png")
 kirito.barreXpPleine = love.graphics.newImage("rpg-battle-system/HUD/bar/purple.png")
 
-
 kirito.nom ="Kirito"
 kirito.x = 500
 kirito.y = 230
-kirito.vieActuelle = 200
-kirito.vieMax = 250
+kirito.vieActuelle = 100
+kirito.vieMax = 100
+kirito.viePourcentage = 100
 kirito.niveau = 1
 kirito.force = 10
 kirito.vitesse = 5

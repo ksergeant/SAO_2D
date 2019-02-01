@@ -66,6 +66,7 @@ function TileSheetFace.Draw()
   local y = love.mouse.getY()
   local c = math.floor(x / TILE_WIDTH) + 1
   local l = math.floor(y / TILE_HEIGHT) + 1
+  
   if l>0 and c>0 and l <= MAP_HEIGHT and c <= MAP_WIDTH then
     local id = TileSheetFace.Map[l][c]
     

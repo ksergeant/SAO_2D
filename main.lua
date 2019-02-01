@@ -65,6 +65,9 @@ function love.update(dt)
     end
   end
 
+
+kirito.viePourcentage = (kirito.vieActuelle * 100) / kirito.vieMax
+
 end
   
 
@@ -109,22 +112,46 @@ function love.draw()
       math.rad(sanglier.angle), 0.7, 0.7)
     
     -- Barre de vie vide
-    love.graphics.draw(kirito.gui, 135, 410,
+    love.graphics.draw(kirito.barreDeVieVide, 135, 410,
       math.rad(kirito.angle), 0.30, 0.30)
     
+    
+    if kirito.viePourcentage > 50 then
     -- Barre de vie vert 
-    love.graphics.draw(kirito.gui2, 237, 427,
-    math.rad(kirito.angle), 0.348, 0.348)
+    local barreVerteValeurPourcentage = (kirito.viePourcentage / 100 ) * 1015
+    local barreVerteQuad = love.graphics.newQuad(0,0,barreVerteValeurPourcentage,65,1015,65)
   
-  -- Barre d'xp vide
-  love.graphics.draw(kirito.barreXp, 25, 569,
-    math.rad(kirito.angle), 1, 1)
+    love.graphics.draw(kirito.barreDeVieVerte, barreVerteQuad, 237, 427,
+    math.rad(kirito.angle), 0.348, 0.348)
+    
+    
+    else if kirito.viePourcentage  < 51 and kirito.viePourcentage>25 then
+  -- Barre de vie jaune 
+    local barreJauneValeurPourcentage = (kirito.viePourcentage / 100 ) * 1015
+    local barreJauneQuad = love.graphics.newQuad(0,0,barreJauneValeurPourcentage,65,1015,65)
+  
+    love.graphics.draw(kirito.barreDeVieJaune, barreJauneQuad, 237, 427,
+    math.rad(kirito.angle), 0.348, 0.348)
+    
+  
+    else
+  -- Barre de vie rouge
+    local barreRougeValeurPourcentage = (kirito.viePourcentage / 100 ) * 1015
+    local barreRougeQuad = love.graphics.newQuad(0,0,barreRougeValeurPourcentage,65,1015,65)
+    love.graphics.draw(kirito.barreDeVieRouge, barreRougeQuad, 237, 427,
+    math.rad(kirito.angle), 0.348, 0.348)
+    end 
+  end
+   -- Barre d'xp vide
+   love.graphics.draw(kirito.barreXp, 25, 569,
+   math.rad(kirito.angle), 1, 1)
   
   -- Barre d'xp pleine
   love.graphics.draw(kirito.barreXpPleine, 30, 569,
     math.rad(kirito.angle), 1, 1)
   
   -- infos Kirito
+    love.graphics.print(kirito.viePourcentage.."%", 376,433)
     love.graphics.print(kirito.niveau,578,464)
     love.graphics.print(kirito.nom,179,433)
     love.graphics.print(kirito.vieActuelle,443,464)
@@ -178,8 +205,8 @@ love.graphics.print(tostring(kirito.vitesse),85,627)
    -- love.graphics.setColor(1,0,0,100)
    -- love.graphics.print("Lancement",842, 470)
    -- love.graphics.setColor(255,255,255,100)
-end
 
+end
 function love.mousepressed(x, y, button, istouch)
    if button == 1 then 
       

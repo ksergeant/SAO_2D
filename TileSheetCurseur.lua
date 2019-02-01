@@ -11,7 +11,6 @@ TileSheetCurseur.Map =  {
   {4,5,6},
   {7,8,9},
  
-
 }
 
 TileSheetCurseur.TileSheet = {}
@@ -61,6 +60,7 @@ function TileSheetCurseur.Draw()
   local y = love.mouse.getY()
   local c = math.floor(x / TILE_WIDTH) + 1
   local l = math.floor(y / TILE_HEIGHT) + 1
+  
   if l>0 and c>0 and l <= MAP_HEIGHT and c <= MAP_WIDTH then
     local id = TileSheetCurseur.Map[l][c]
     

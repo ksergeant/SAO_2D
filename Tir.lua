@@ -1,3 +1,0 @@
-local tir = {}
-
-return tir
