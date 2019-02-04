@@ -12,13 +12,19 @@ sanglier.vie = 100
 sanglier.mana = 50
 sanglier.force = 10
 sanglier.defense = 40
-sanglier.attaque = 50
+sanglier.attaque = 25
 
 sanglier.angle = 0
 sanglier.vitesse = 0
 sanglier.vx = 0
 sanglier.vy = 0
 
+
+function sanglier.Attaque(cible)
+  
+  cible.vieActuelle = cible.vieActuelle - sanglier.attaque
+
+end
 function sanglier.Load(dt)
   
 end

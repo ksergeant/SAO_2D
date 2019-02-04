@@ -17,18 +17,21 @@ local command = "nul"
 
 --local Background = {}
 
-
 local kirito = require("Kirito")
 local asuna = require("Asuna")
 local sanglier = require("Sanglier")
 
 bgm = love.audio.newSource("/sons/maintrack.ogg", "stream")
-love.audio.play(bgm)
+--love.audio.play(bgm)
 
 local listeCommand = {}
 local sprites = {}
 local ListeTirs = {}
 local tirs = {}
+local diffPourcentage = {}
+local vitesseAnimation = 0.08
+local pourcentagePrecedent = {}
+local vieActuelle = {}
 
 function CreeSprite(pNomImage, pX, pY)
   
@@ -52,12 +55,12 @@ love.graphics.setNewFont("GUI/Maximilien_Regular.ttf", 15)
   hauteur = love.graphics.getHeight()
   kirito.Load()
   asuna.Load()
-  love.audio.play(bgm)
+  --love.audio.play(bgm)
   
 end
 
 function love.update(dt)
-  love.audio.play(bgm)
+  --love.audio.play(bgm)
        -- Purge des sprites à supprimer
   for n=#sprites,1,-1 do
     if sprites[n].supprime == true then
@@ -65,13 +68,16 @@ function love.update(dt)
     end
   end
 
+vieActuelle = kirito.viePourcentage
 
 kirito.viePourcentage = (kirito.vieActuelle * 100) / kirito.vieMax
+  
+  
+  if kirito.vieActuelle < 0 then
+     kirito.vieActuelle = 0
+  end
 
 end
-  
-
-
 
 function love.draw()
   
@@ -115,33 +121,44 @@ function love.draw()
     love.graphics.draw(kirito.barreDeVieVide, 135, 410,
       math.rad(kirito.angle), 0.30, 0.30)
     
+    ----======= ANIMATION BARRE DE VIE ==========
+   
+    if kirito.viePourcentage < 0 then
+      kirito.viePourcentage = 0
+    end
     
     if kirito.viePourcentage > 50 then
     -- Barre de vie vert 
-    local barreVerteValeurPourcentage = (kirito.viePourcentage / 100 ) * 1015
-    local barreVerteQuad = love.graphics.newQuad(0,0,barreVerteValeurPourcentage,65,1015,65)
-  
-    love.graphics.draw(kirito.barreDeVieVerte, barreVerteQuad, 237, 427,
-    math.rad(kirito.angle), 0.348, 0.348)
+      
+        local barreVerteValeurPourcentage = math.floor( ( kirito.viePourcentage / 100 ) * 1015)
+        
+        local barreVerteQuad = love.graphics.newQuad(0 ,0, barreVerteValeurPourcentage, 65, 1015, 65)
+        love.graphics.draw(kirito.barreDeVieVerte, barreVerteQuad, 237, 427,
+        math.rad(kirito.angle), 0.348, 0.348)
+      
     
-    
-    else if kirito.viePourcentage  < 51 and kirito.viePourcentage>25 then
+    else if kirito.viePourcentage < 51 and kirito.viePourcentage > 25 then
   -- Barre de vie jaune 
     local barreJauneValeurPourcentage = (kirito.viePourcentage / 100 ) * 1015
-    local barreJauneQuad = love.graphics.newQuad(0,0,barreJauneValeurPourcentage,65,1015,65)
+    local barreJauneQuad = love.graphics.newQuad(0, 0, barreJauneValeurPourcentage, 65, 1015, 65)
   
     love.graphics.draw(kirito.barreDeVieJaune, barreJauneQuad, 237, 427,
     math.rad(kirito.angle), 0.348, 0.348)
     
-  
     else
   -- Barre de vie rouge
     local barreRougeValeurPourcentage = (kirito.viePourcentage / 100 ) * 1015
-    local barreRougeQuad = love.graphics.newQuad(0,0,barreRougeValeurPourcentage,65,1015,65)
+    local barreRougeQuad = love.graphics.newQuad(0, 0, barreRougeValeurPourcentage, 65, 1015, 65)
+    
     love.graphics.draw(kirito.barreDeVieRouge, barreRougeQuad, 237, 427,
     math.rad(kirito.angle), 0.348, 0.348)
-    end 
+  
+  end 
+  
   end
+  
+    ----======= FIN ANIMATION BARRE DE VIE ==========
+  
    -- Barre d'xp vide
    love.graphics.draw(kirito.barreXp, 25, 569,
    math.rad(kirito.angle), 1, 1)
@@ -151,7 +168,7 @@ function love.draw()
     math.rad(kirito.angle), 1, 1)
   
   -- infos Kirito
-    love.graphics.print(kirito.viePourcentage.."%", 376,433)
+    love.graphics.print(math.floor(kirito.viePourcentage).."%", 376,433)
     love.graphics.print(kirito.niveau,578,464)
     love.graphics.print(kirito.nom,179,433)
     love.graphics.print(kirito.vieActuelle,443,464)
@@ -160,6 +177,9 @@ function love.draw()
 -- Curseur
 love.graphics.draw(myTileSheetCurseur.TileSheet, kirito.imageCurseur[1], 165, 505,
     math.rad(kirito.angle), 0.25,0.25)
+love.graphics.draw(myTileSheetCurseur.TileSheet, kirito.imageCurseur[2], kirito.x+3, kirito.y-38,
+    math.rad(kirito.angle), 0.20,0.20)
+  
 
 love.graphics.print("ATTAQUE", 220,522)
 love.graphics.print("INVENTAIRE", 220,580)
@@ -209,7 +229,8 @@ love.graphics.print(tostring(kirito.vitesse),85,627)
 end
 function love.mousepressed(x, y, button, istouch)
    if button == 1 then 
-      
+       sanglier.Attaque(kirito)
+
    end
 end
  

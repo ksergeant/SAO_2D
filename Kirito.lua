@@ -62,8 +62,10 @@ function kirito.Load(dt)
   
   kirito.imageFace[1] = kiritoTileSheetFace.TileTextures[1]
   kirito.imageCurseur[1] = kiritoTileSheetCurseur.TileTextures[3]
- 
+  kirito.imageCurseur[2] = kiritoTileSheetCurseur.TileTextures[9]
 end
+
+
 
 function kirito.Update(dt)
 end
@@ -72,3 +74,4 @@ function kirito.Draw(dt)
 end
 
 return kirito
+
