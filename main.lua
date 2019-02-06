@@ -12,6 +12,13 @@ local myTileSheet = require("Tilesheet")
 local myTileSheetFace = require("TileSheetFace")
 local myTileSheetCurseur = require("TileSheetCurseur")
 
+local ecran_courant = "menu" 
+local imgMenu1 = love.graphics.newImage("Menu/EcranMenu1.jpg")
+local imgMenu2 = love.graphics.newImage("Menu/EcranMenu2.jpg")
+local imgMenu3 = love.graphics.newImage("Menu/EcranMenu3.jpg")
+local imgMenu4 = love.graphics.newImage("Menu/EcranMenu4.jpg")
+local imgBoutonMenu = love.graphics.newImage("base_pack/PNG/grey_button00.png")
+
 local tableauCommand = "TabCommand :"
 local command = "nul"
 
@@ -50,16 +57,24 @@ function CreeSprite(pNomImage, pX, pY)
 end
 
 function love.load()
-love.graphics.setNewFont("GUI/Maximilien_Regular.ttf", 15)
+
+  --love.audio.play(bgm)
+  
+  DemarreJeu()
+  
+end
+
+function DemarreJeu()
+  
+  love.graphics.setNewFont("GUI/Maximilien_Regular.ttf", 15)
   largeur = love.graphics.getWidth()
   hauteur = love.graphics.getHeight()
   kirito.Load()
   asuna.Load()
-  --love.audio.play(bgm)
-  
 end
 
-function love.update(dt)
+function UpdateJeu(dt)
+  
   --love.audio.play(bgm)
        -- Purge des sprites à supprimer
   for n=#sprites,1,-1 do
@@ -67,23 +82,18 @@ function love.update(dt)
       table.remove(sprites,n)
     end
   end
+    vieActuelle = kirito.viePourcentage
 
-vieActuelle = kirito.viePourcentage
-
-kirito.viePourcentage = (kirito.vieActuelle * 100) / kirito.vieMax
-  
+  kirito.viePourcentage = (kirito.vieActuelle * 100) / kirito.vieMax
   
   if kirito.vieActuelle < 0 then
      kirito.vieActuelle = 0
   end
-
 end
 
-function love.draw()
-  
+function DrawJeu()
   love.graphics.setNewFont("GUI/Maximilien_Regular.ttf", 15)
-  
-  local n
+    local n
   for n=1,#sprites do
     
     
@@ -225,12 +235,77 @@ love.graphics.print(tostring(kirito.vitesse),85,627)
    -- love.graphics.setColor(1,0,0,100)
    -- love.graphics.print("Lancement",842, 470)
    -- love.graphics.setColor(255,255,255,100)
+end
+
+function UpdateMenu(dt)
+  
+end
+
+function DrawMenu()
+  --love.graphics.setNewFont("GUI/Maximilien_Regular.ttf", 40)
+  love.graphics.setNewFont(40)
+  love.graphics.draw(imgMenu4,0,0)
+  
+  love.graphics.setColor(255, 255, 255) -- Blanc
+  love.graphics.print("MENU PRINCIPAL", 170, 75)
+  love.graphics.setColor(255, 255, 255) -- Blanc
+  --love.graphics.setNewFont("GUI/Maximilien_Regular.ttf", 22)
+  love.graphics.setNewFont(22)
+  love.graphics.draw(imgBoutonMenu, 30, 270) -- Bouton Combat
+  love.graphics.setColor(0.8, 0, 0) -- Rouge
+  love.graphics.print("COMBAT", 79, 279)
+  love.graphics.setColor(255, 255, 255) -- Blanc
+  
+  love.graphics.draw(imgBoutonMenu, 225, 270) -- Bouton Aventure
+  love.graphics.setColor(0.8, 0, 0) -- Rouge
+ -- love.graphics.setNewFont("GUI/Maximilien_Regular.ttf", 22)
+  love.graphics.print("AVENTURE", 261, 279)
+  love.graphics.setColor(255, 255, 255) -- Blanc
+  
+  love.graphics.draw(imgBoutonMenu, 430, 270) -- Bouton Quitter
+  love.graphics.setColor(0.8, 0, 0) -- Rouge
+ -- love.graphics.setNewFont("GUI/Maximilien_Regular.ttf", 22)
+  love.graphics.print("QUITTER", 477, 279)
+  love.graphics.setColor(255, 255, 255) -- Blanc
+  
+ -- love.graphics.setNewFont("GUI/Maximilien_Regular.ttf", 20)
+  love.graphics.setColor(0.8, 0, 0) -- Rouge
+  love.graphics.print("BY MOKS", 530, 600)
+  love.graphics.setColor(255, 255, 255) -- Blanc
+ 
 
 end
+
+function love.update(dt)
+  
+  if ecran_courant == "jeu" then
+    UpdateJeu(dt)
+  elseif ecran_courant == "menu" then
+    UpdateMenu(dt)
+  end
+
+end
+
+function love.draw()
+  
+  if ecran_courant == "jeu" then
+    DrawJeu()
+  elseif ecran_courant == "menu" then
+    DrawMenu()
+  end
+  
+  
+end
 function love.mousepressed(x, y, button, istouch)
+  if ecran_courant == "jeu" then
    if button == 1 then 
        sanglier.Attaque(kirito)
-
-   end
+    end
+  elseif ecran_courant == "menu" then
+    if button == 1 then
+      ecran_courant = "jeu"
+    end
+  end
+ 
 end
  
