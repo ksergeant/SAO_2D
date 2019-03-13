@@ -18,6 +18,8 @@ local imgMenu2 = love.graphics.newImage("Menu/EcranMenu2.jpg")
 local imgMenu3 = love.graphics.newImage("Menu/EcranMenu3.jpg")
 local imgMenu4 = love.graphics.newImage("Menu/EcranMenu4.jpg")
 local imgBoutonMenu = love.graphics.newImage("base_pack/PNG/grey_button00.png")
+local imgEnteteMenu = love.graphics.newImage("Menu/EnteteImage.png")
+local compteurMenu = 0
 
 local tableauCommand = "TabCommand :"
 local command = "nul"
@@ -29,7 +31,8 @@ local asuna = require("Asuna")
 local sanglier = require("Sanglier")
 
 bgm = love.audio.newSource("/sons/maintrack.ogg", "stream")
---love.audio.play(bgm)
+
+musiqueMenu = love.audio.newSource("/sons/Menu.ogg", "stream")
 
 local listeCommand = {}
 local sprites = {}
@@ -57,8 +60,6 @@ function CreeSprite(pNomImage, pX, pY)
 end
 
 function love.load()
-
-  --love.audio.play(bgm)
   
   DemarreJeu()
   
@@ -92,6 +93,7 @@ function UpdateJeu(dt)
 end
 
 function DrawJeu()
+
   love.graphics.setNewFont("GUI/Maximilien_Regular.ttf", 15)
     local n
   for n=1,#sprites do
@@ -239,21 +241,33 @@ end
 
 function UpdateMenu(dt)
   
+  -- compteur pour l'animation du selecteur du menu
+  compteurMenu = compteurMenu + (7.2 * dt)
+    if math.floor(compteurMenu) > 1 then
+      compteurMenu = 0
+    end
+    
 end
 
 function DrawMenu()
   --love.graphics.setNewFont("GUI/Maximilien_Regular.ttf", 40)
-  love.graphics.setNewFont(40)
-  love.graphics.draw(imgMenu4,0,0)
+  love.audio.play(musiqueMenu)
+  
+  local r,g,b = love.graphics.getColor() 
+  
+  love.graphics.setNewFont(40) 
+  love.graphics.draw(imgMenu4,0,0) -- Image du menu 
+  love.graphics.draw(imgEnteteMenu,130, 60, 0, 0.5, 0.5);
   
   love.graphics.setColor(255, 255, 255) -- Blanc
-  love.graphics.print("MENU PRINCIPAL", 170, 75)
+  --love.graphics.print("MENU PRINCIPAL", 170, 150)
   love.graphics.setColor(255, 255, 255) -- Blanc
   --love.graphics.setNewFont("GUI/Maximilien_Regular.ttf", 22)
   love.graphics.setNewFont(22)
-  love.graphics.draw(imgBoutonMenu, 30, 270) -- Bouton Combat
+  
+  love.graphics.draw(imgBoutonMenu, 20, 270) -- Bouton Combat
   love.graphics.setColor(0.8, 0, 0) -- Rouge
-  love.graphics.print("COMBAT", 79, 279)
+  love.graphics.print("COMBAT", 68, 279)
   love.graphics.setColor(255, 255, 255) -- Blanc
   
   love.graphics.draw(imgBoutonMenu, 225, 270) -- Bouton Aventure
@@ -273,6 +287,18 @@ function DrawMenu()
   love.graphics.print("BY MOKS", 530, 600)
   love.graphics.setColor(255, 255, 255) -- Blanc
  
+  love.graphics.setLineWidth(5)
+  
+  -- Animation du selecteur
+   if math.floor(compteurMenu) == 0 then 
+      love.graphics.setColor(1, 0, 0)
+    else
+      love.graphics.setColor(1, 1, 0)
+    end
+  
+  love.graphics.rectangle("line",15, 266, 200, 53)
+  love.graphics.setColor(r,g,b) 
+  
 
 end
 
@@ -294,8 +320,13 @@ function love.draw()
     DrawMenu()
   end
   
-  
 end
+
+function love.keypressed(key)
+  
+
+end
+
 function love.mousepressed(x, y, button, istouch)
   if ecran_courant == "jeu" then
    if button == 1 then 
