@@ -20,6 +20,13 @@ local imgMenu4 = love.graphics.newImage("Menu/EcranMenu4.jpg")
 local imgBoutonMenu = love.graphics.newImage("base_pack/PNG/grey_button00.png")
 local imgEnteteMenu = love.graphics.newImage("Menu/EnteteImage.png")
 local compteurMenu = 0
+local selecteur = {}
+selecteur.x = 15
+selecteur.y = 266
+selecteur.width = 200
+selecteur.height = 53
+selecteur.mode = 1
+-- love.graphics.rectangle("line",selecteur.x, selecteur.y, selecteur.width, selecteur.height)
 
 local tableauCommand = "TabCommand :"
 local command = "nul"
@@ -75,8 +82,9 @@ function DemarreJeu()
 end
 
 function UpdateJeu(dt)
+  love.audio.stop(musiqueMenu)
+  love.audio.play(bgm)
   
-  --love.audio.play(bgm)
        -- Purge des sprites à supprimer
   for n=#sprites,1,-1 do
     if sprites[n].supprime == true then
@@ -240,7 +248,7 @@ love.graphics.print(tostring(kirito.vitesse),85,627)
 end
 
 function UpdateMenu(dt)
-  
+  love.audio.stop(bgm)
   -- compteur pour l'animation du selecteur du menu
   compteurMenu = compteurMenu + (7.2 * dt)
     if math.floor(compteurMenu) > 1 then
@@ -296,7 +304,7 @@ function DrawMenu()
       love.graphics.setColor(1, 1, 0)
     end
   
-  love.graphics.rectangle("line",15, 266, 200, 53)
+  love.graphics.rectangle("line",selecteur.x, selecteur.y, selecteur.width, selecteur.height)
   love.graphics.setColor(r,g,b) 
   
 
@@ -324,8 +332,76 @@ end
 
 function love.keypressed(key)
   
+  if ecran_courant == "jeu" then
+   
+   if key == "q" then
+      
+        print(key)
+        ecran_courant="menu"
+      
+    end
+  
+  elseif ecran_courant == "menu" then
+    
+    if key == "right" and selecteur.mode == 2 then
+      
+        selecteur.x = 425
+        selecteur.y = 266
+        selecteur.mode = 3
+      
+    end
+    
+    if key == "left" and selecteur.mode == 2 then
+        selecteur.x = 15
+        selecteur.y = 266
+        selecteur.mode = 1
+        
+    end
+    
+    if key == "left" and selecteur.mode == 3 then
+      
+        selecteur.x = 220
+        selecteur.y = 266
+        selecteur.mode = 2
+      
+    end
+    
+    if key == "right" and selecteur.mode == 1 then
+        selecteur.x = 220
+        selecteur.y = 266
+        selecteur.mode = 2
+        print(key)
+        print(selecteur.mode)
+        
+        
+    end
+    
+    if key == "space" and selecteur.mode == 1 then
+      
+      print(key)
+      print(selecteur.mode)
+      ecran_courant = "jeu"
+    end
+    
+    if key == "space" and selecteur.mode == 2 then
+      
+      print(key)
+      print(selecteur.mode)
+      print("mode aventure")
+      --ecran_courant = "aventure"
+    end
+    
+    if key == "space" and selecteur.mode == 3 then
+      
+      print(key)
+      print(selecteur.mode)
+      love.event.quit()
+    end
+  end
 
 end
+
+ 
 
 function love.mousepressed(x, y, button, istouch)
   if ecran_courant == "jeu" then
